@@ -1,0 +1,49 @@
+entity:
+    MenuRoot: Menu root|Menu roots
+    MenuNode: Menu node|Menu nodes
+    Page: Page|Pages
+    PageBlock: Page block|Page blocks
+
+Add: Add
+Edit: Edit
+Save: Save
+Save and close: Save and close
+Save and add another: Save and add another
+Delete: Delete
+Show: Show
+Cancel: Cancel
+Back: Back
+Save Changes: Save changes
+View site: View site
+index_title: %label% List
+Reset: Reset
+Search: Search
+Profile: Profile
+Log out: Log out
+Français: Français
+Filter: Filter
+The action was executed successfully!: The action was executed successfully!
+Updatedat: Last update
+Createdat: Created
+Download: Download
+Enabled: Enabled
+View file: View file
+Update: Update
+Create: Create
+Select all: Select all
+Select none: Select none
+
+Home: Home
+Title: Title
+Template: Template
+Metakeywords: Keywords
+Metadescription: Description
+Name: Name
+Order: Order
+Content: Content
+Security: Security
+Lastlogin: Last login
+Published: Published
+Issuperadmin: Is Super Admin
+Targetblank: Open in a new tab
+Settings: Settings

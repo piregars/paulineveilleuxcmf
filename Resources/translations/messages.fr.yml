@@ -1,0 +1,54 @@
+entity:
+    MenuRoot: Menu|Menus
+    MenuNode: Item de menu|Items de menu
+    Page: Page|Pages
+    PageBlock: Bloc de page|Blocs de page
+
+Add: Ajouter
+Edit: Modifier
+Save: Enregistrer
+Save and close: Enregistrer et fermer
+Save and add another: Enregistrer et ajouter un autre
+Delete: Supprimer
+Show: Afficher
+Cancel: Annuler
+Back: Retour
+Save Changes: Sauvegarder les modifications
+View site: Voir le site
+index_title: Liste des %label%
+Reset: Réinitialiser
+Search: Rechercher
+Profile: Profil
+Log out: Fermer la session
+Français: English
+Filter: Filtre
+The action was executed successfully!: L'action a été executée avec succès!
+Updatedat: Dernière mise à jour
+Createdat: Créé
+Download: Télécharger
+Enabled: Activé
+View file: Voir le fichier
+Update: Mettre à jour
+Update and close: Mettre à jour et fermer
+Create and close: Créer et fermer
+Create and add: Créer et ajouter
+Main: Principal
+Advanced: Avancé
+Select all: Sélectionner tout
+Select none: Sélectionner aucun
+
+Home: Accueil
+Title: Titre
+Template: Gabarit
+Metakeywords: Mots clés
+Metadescription: Description
+Name: Nom
+Order: Ordre
+Content: Contenu
+Security: Sécurité
+Lastlogin: Dernière connexion
+Published: Publié
+Issuperadmin: Is Super Admin
+Targetblank: Ouvrir dans un nouvel onglet
+Back to list: Retour à la liste
+Settings: Paramètres

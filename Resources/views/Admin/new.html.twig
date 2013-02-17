@@ -1,0 +1,34 @@
+{% extends 'MsiCmfBundle::layout.html.twig' %}
+
+{% block title %}{{ 'Add'|trans }} {{ admin.getLabel()|lower }}{% endblock title %}
+
+{% block page_title %}
+    {{ 'Add'|trans }} {{ admin.getLabel() }}
+{% endblock %}
+
+{% block content %}
+    <form novalidate class="form-horizontal" action="{{ admin.genUrl('new') }}" method="POST" {{ form_enctype(form) }}>
+        {% include admin.getOption('form_template') %}
+        <div class="form-actions" style="margin-bottom: 0;">
+            <button class="btn" type="submit">{{ 'Save and close'|trans }}</button>
+            <button class="btn alt">{{ 'Save and add another'|trans }}</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block actions %}
+{% if admin.isGranted('read') %}
+    <a href="{{ admin.genUrl('index') }}" class="btn">{{ 'Back to list'|trans }}</a>
+{% endif %}
+{% endblock actions %}
+
+{% block js %}
+{{ parent() }}
+{% include admin.container.getParameter('msi_cmf.tiny_mce') %}
+<script>
+    $('button.alt').on('click', function() {
+        var $form = $(this).closest('form');
+        $form.attr('action', $.parameterize($form.attr('action'), {'alt': true}));
+    });
+</script>
+{% endblock js %}

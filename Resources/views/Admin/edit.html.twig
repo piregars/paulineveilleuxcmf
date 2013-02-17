@@ -1,0 +1,53 @@
+{% extends 'MsiCmfBundle::layout.html.twig' %}
+
+{% block title %}{{ 'Edit'|trans }} "{{ admin.object }}"{% endblock title %}
+
+{% block page_title %}
+    {{ 'Edit'|trans }} {{ admin.getLabel(1) }}
+{% endblock %}
+
+{% block content %}
+    <form novalidate class="form-horizontal" action="{{ admin.genUrl('edit', {'id': id}) }}" method="POST" {{ form_enctype(form) }}>
+        <input type="hidden" name="_method" value="PUT">
+        {% include admin.getOption('form_template') %}
+        <div class="form-actions" style="margin-bottom: 0;">
+            <button class="btn" type="submit">{{ 'Save and close'|trans }}</button>
+            <button class="btn alt" type="submit">{{ 'Save'|trans }}</button>
+        </div>
+    </form>
+
+    {#<form style="margin:0;" class="form-inline" method=POST action="{{ admin.genUrl('delete', {'id': id}) }}">
+    <input type=hidden name="_method" value=DELETE>
+    <button class="btn btn-danger" type=submit><i class="icon-white icon-remove"></i> {{ 'Delete'|trans }}</button>
+    </form>#}
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+{% include admin.container.getParameter('msi_cmf.tiny_mce') %}
+<script>
+    $('button.alt').on('click', function() {
+        var $form = $(this).closest('form');
+        $form.attr('action', $.parameterize($form.attr('action'), {'alt': true}));
+    });
+</script>
+{% endblock js %}
+
+{% block actions %}
+{% if admin.isGranted('create') %}
+    <a href="{{ admin.genUrl('new') }}" class="btn btn-success"><i class="icon-plus icon-white"></i> {{ 'Add'|trans }}</a>
+{% endif %}
+{% if admin.isGranted('read') %}
+    <a href="{{ admin.genUrl('index') }}" class="btn">{{ 'Back to list'|trans }}</a>
+{% endif %}
+{% endblock actions %}
+
+{% block sidebar %}
+<div class="well" style="padding-left:0;padding-right:0;">
+    <ul class="nav nav-list">
+        {% if admin.hasChild and admin.child.isGranted('read') %}
+            <li><a href="{{ admin.child.genUrl('index', {'parentId': admin.object.id}) }}">{{ admin.child.label(2) }} <span class="muted">({{ admin.countChildElements(admin.object) }})</span></a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock sidebar %}

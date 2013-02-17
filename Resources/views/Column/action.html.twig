@@ -1,0 +1,22 @@
+<div class="btn-group">
+{% if column.options.tree and row.lvl != 0 and row.parent.children.count > 1 %}
+    <a class="btn" href="{{ admin.genUrl('demote', {'id': row.id}) }}"><i class="icon-arrow-down"></i></a>
+    <a class="btn" href="{{ admin.genUrl('promote', {'id': row.id}) }}"><i class="icon-arrow-up"></i></a>
+{% endif %}
+{% for key, val in column.options.actions %}
+    <a class="btn" href="{% if val != '#' %}{{ path(val, {'id': row.id}) }}{% else %}{{ val }}{% endif %}">{{ key|raw }}</a>
+{% endfor %}
+{% if admin.hasChild and admin.child.isGranted('read') %}
+    <a class="btn" href="{{ admin.child.genUrl('index', {'parentId': row.id}) }}">{{ admin.child.label(2) }} <span class="muted">({{ admin.countChildElements(row) }})</span></a>
+{% endif %}
+{% if admin.isGranted('update') %}
+    <a href="{{ admin.genUrl('edit', {'id': row.id}) }}" class="btn"><i class="icon-pencil"></i></a>
+{% endif %}
+{% if admin.isGranted('delete') %}
+    {% if column.options.soft_delete %}
+        <a class="btn msi_cmf_admin_delete" data-url="{{ admin.genUrl('softDelete', {'id': row.id}) }}" href="#"><i class="icon-remove"></i></a>
+    {% else %}
+        <a class="btn msi_cmf_admin_delete" data-url="{{ admin.genUrl('delete', {'_method': 'DELETE', 'id': row.id}) }}" href="#"><i class="icon-remove"></i></a>
+    {% endif %}
+{% endif %}
+</div>

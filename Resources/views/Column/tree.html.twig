@@ -1,0 +1,12 @@
+{% set options = column.options %}
+
+{% for i in 1..row.lvl %}
+    <i class="icon-minus"></i>
+{% endfor %}
+{#<a href="{{ admin.genUrl('edit', {'id': object.id}) }}">#}
+{% if options.truncate %}
+    {{ column.value|truncate(options.truncate_length, options.truncate_preserve, options.truncate_separator) }}
+{% else %}
+    {{ column.value }}
+{% endif %}
+{#</a>#}

@@ -1,0 +1,56 @@
+services:
+    # Menu Root
+    msi_cmf_menu_root_admin:
+        class: Msi\Bundle\CmfBundle\Admin\MenuRootAdmin
+        arguments: [ @msi_cmf.menu_root_manager ]
+        parent: msi_cmf.admin
+        tags:
+            - { name: msi.admin }
+        calls:
+            - [ setChild, [ @msi_cmf_menu_node_admin ] ]
+
+    msi_cmf.menu_root_manager:
+        class: Msi\Bundle\CmfBundle\EntityManager\MenuManager
+        arguments: [ Msi\Bundle\CmfBundle\Entity\Menu ]
+        parent: msi_cmf.manager
+
+    # Menu Node
+    msi_cmf_menu_node_admin:
+        class: Msi\Bundle\CmfBundle\Admin\MenuNodeAdmin
+        arguments: [ @msi_cmf.menu_node_manager ]
+        parent: msi_cmf.admin
+        tags:
+            - { name: msi.admin }
+        calls:
+            - [ setParent, [ @msi_cmf_menu_root_admin ] ]
+
+    msi_cmf.menu_node_manager:
+        class: %msi_cmf.manager.class%
+        arguments: [ Msi\Bundle\CmfBundle\Entity\Menu ]
+        parent: msi_cmf.manager
+
+    # Page
+    msi_cmf_page_admin:
+        class: Msi\Bundle\CmfBundle\Admin\PageAdmin
+        arguments: [ @msi_cmf.page_manager ]
+        parent: msi_cmf.admin
+        tags:
+            - { name: msi.admin }
+
+    msi_cmf.page_manager:
+        class: Msi\Bundle\CmfBundle\EntityManager\PageManager
+        arguments: [ Msi\Bundle\CmfBundle\Entity\Page ]
+        parent: msi_cmf.manager
+
+    # PageBlock
+    msi_cmf_page_block_admin:
+        class: Msi\Bundle\CmfBundle\Admin\PageBlockAdmin
+        arguments: [ @msi_cmf.page_block_manager ]
+        parent: msi_cmf.admin
+        tags:
+            - { name: msi.admin }
+
+    msi_cmf.page_block_manager:
+        class: %msi_cmf.manager.class%
+        arguments: [ Msi\Bundle\CmfBundle\Entity\PageBlock ]
+        parent: msi_cmf.manager

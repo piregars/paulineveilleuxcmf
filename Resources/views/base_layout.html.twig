@@ -1,0 +1,110 @@
+{% extends '::base.html.twig' %}
+
+{% block css %}
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('bundles/msicmf/vendor/chosen/chosen.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/msicmf/vendor/eternicode-bootstrap-datepicker/css/datepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/msicmf/css/admin.css') }}">
+{% endblock %}
+
+{% block js %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+
+<script src="{{ asset('bundles/msicmf/vendor/chosen/chosen.jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/msicmf/vendor/eternicode-bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('bundles/msicmf/vendor/eternicode-bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.js') }}"></script>
+<script src="{{ asset('bundles/msicmf/js/admin.js') }}"></script>
+<script>
+$("select.chosenify").chosen({placeholder_text_single: ' ', placeholder_text_multiple: ''});
+$('.datepicker').datepicker({
+    format: 'dd-mm-yyyy',
+    autoclose: true,
+    language: '{{ app.request.locale }}'
+});
+</script>
+{% endblock %}
+
+{% block brand %}Lorem{% endblock brand %}
+
+{% block body %}
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            {% if block('brand')|length > 0 %}
+                <a class="brand" href="{{ path('msi_cmf_dashboard') }}">{{ block('brand') }}</a>
+            {% endif %}
+            {{ knp_menu_render('MsiCmfBundle:MenuBuilder:adminMenu', {'allow_safe_labels': true, 'depth': 3, 'currentClass': 'active'}) }}
+            <ul class="pull-right nav">
+                {% if app_locales|length > 1 %}
+                    {% set locale = app.request.locale == 'en' ? 'fr' : 'en' %}
+                    <li><a href="{{ path('msi_cmf_dashboard', {'_locale': locale}) }}">{{ locale }}</a></li>
+                {% endif %}
+            </ul>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <a class="btn" href="{{ path('fos_user_profile_edit') }}">{{ app.user.username }}</a>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('fos_user_security_logout') }}">{{ 'Log out'|trans }}</a></li>
+                        </ul>
+                    </div>
+                    <a target="_blank" class="btn" href="{{ path('msi_page_show') }}">{{ 'View site'|trans }}</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="box">
+        <div class="row-fluid">
+            <div class="span2" id="sidebar">
+                {{ msi_block_render('admin_sidebar_top', page) }}
+                {#{{ knp_menu_render('MsiCmfBundle:MenuBuilder:sidebarMenu', {'allow_safe_labels': true, 'depth': 2, 'currentClass': 'active'}) }}#}
+                {% block sidebar %}{% endblock sidebar %}
+                {{ msi_block_render('admin_sidebar_bottom', page) }}
+            </div>
+            <div class="span10" id="content">
+                {# Flashes #}
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success fade in">
+                        <a class="close" data-dismiss="alert" href="#">×</a>
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+
+                {# Breadcrumb #}
+                {% block breadcrumb %}
+                {% if admin is defined %}
+                    {% include 'MsiCmfBundle:Default:breadcrumb.html.twig' with {'crumbs': admin.buildBreadcrumb } %}
+                {% endif %}
+                {% endblock breadcrumb %}
+
+                <div class="clearfix"></div>
+
+                <div class="row-fluid">
+                    <div class="span6">
+                        {# Title #}
+                        <h2>{{ block('title') }} {% block after_title %}{% endblock after_title %}</h2>
+                    </div>
+                    <div class="span6">
+                        {# Actions #}
+                        {% if block('actions')|length > 0 %}
+                            <div class="pull-right btn-toolbar">{% block actions %}{% endblock actions %}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr style="margin-top:0;">
+                {# Content #}
+                {{ msi_block_render('admin_content_top', page) }}
+                {% block content %}{% endblock %}
+                {{ msi_block_render('admin_content_bottom', page) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
